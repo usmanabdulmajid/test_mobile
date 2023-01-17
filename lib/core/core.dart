@@ -12,3 +12,4 @@ export 'service/local_storage/hive_storage.dart';
 export 'exceptions/network_exception.dart';
 export 'exceptions/exception_parser.dart';
 export 'exceptions/app_exception.dart';
+export 'theme/app_color.dart';
