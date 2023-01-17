@@ -21,4 +21,6 @@ abstract class AppColor {
   static const goBen = Color(0XFF70654D);
   static const easternBlue = Color(0XFF189393);
   static const nepal = Color(0XFF91B2C0);
+  static const iron = Color(0XFFDEDEDF);
+  static const mischka = Color(0XFFCFD1DA);
 }

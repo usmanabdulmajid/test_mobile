@@ -10,3 +10,4 @@ const ksmallSpace = 8.0;
 const kmediumSpace = 24.0;
 const kLargeSpace = 32.0;
 const kxtraLargeSpace = 40.0;
+const kLargestSpace = 70.0;
