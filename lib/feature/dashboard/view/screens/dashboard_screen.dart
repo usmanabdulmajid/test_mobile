@@ -269,6 +269,31 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: GestureDetector(
+        onTap: () {},
+        child: Container(
+          height: 60,
+          width: size.width,
+          decoration: const BoxDecoration(
+            color: AppColor.easternBlue,
+          ),
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.link_rounded,
+                color: AppColor.white,
+              ),
+              XMargin(ksmallSpace),
+              Text(
+                'Link Demand Notice',
+                style: TextStyle(color: AppColor.white, fontSize: 16),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
