@@ -289,7 +289,7 @@ class DashboardScreen extends StatelessWidget {
               Text(
                 'Link Demand Notice',
                 style: TextStyle(color: AppColor.white, fontSize: 16),
-              )
+              ),
             ],
           ),
         ),
