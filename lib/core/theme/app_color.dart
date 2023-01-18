@@ -25,4 +25,5 @@ abstract class AppColor {
   static const mischka = Color(0XFFCFD1DA);
   static const dairyCream = Color(0XFFF8E3B1);
   static const goblin = Color(0XFF35733A);
+  static const chathamsBlue = Color(0XFF135B79);
 }
