@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_mobile/core/common_widgets/product_tile.dart';
 import 'package:test_mobile/core/core.dart';
 import 'package:test_mobile/feature/dashboard/view/widgets/dashboard_tile.dart';
 
@@ -288,7 +287,11 @@ class DashboardScreen extends StatelessWidget {
               XMargin(ksmallSpace),
               Text(
                 'Link Demand Notice',
-                style: TextStyle(color: AppColor.white, fontSize: 16),
+                style: TextStyle(
+                  color: AppColor.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
