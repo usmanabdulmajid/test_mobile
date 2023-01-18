@@ -3,6 +3,7 @@ library core;
 export 'utils/enums.dart';
 export 'utils/sizing.dart';
 export 'utils/logging.dart';
+export 'utils/extensions.dart';
 export 'constants/constants.dart';
 export 'models/r_response.dart';
 export 'service/http/http_service.dart';

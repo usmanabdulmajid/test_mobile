@@ -23,4 +23,6 @@ abstract class AppColor {
   static const nepal = Color(0XFF91B2C0);
   static const iron = Color(0XFFDEDEDF);
   static const mischka = Color(0XFFCFD1DA);
+  static const dairyCream = Color(0XFFF8E3B1);
+  static const goblin = Color(0XFF35733A);
 }

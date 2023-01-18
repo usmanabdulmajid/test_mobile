@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_mobile/feature/auth/view/login_screen.dart';
+import 'package:test_mobile/feature/dashboard/view/screens/dashboard_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: DashboardScreen(),
     );
   }
 }
