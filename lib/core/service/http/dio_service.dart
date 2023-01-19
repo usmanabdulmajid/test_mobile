@@ -6,7 +6,7 @@ import 'package:test_mobile/core/core.dart';
 
 class DioService implements HttpService {
   DioService(this.dio) {
-    dio.options.baseUrl = '';
+    dio.options.baseUrl = baseUrl;
     dio.options.connectTimeout = 15000;
     dio.options.headers.addAll({'Content-Type': 'application/json'});
     if (kDebugMode) {
