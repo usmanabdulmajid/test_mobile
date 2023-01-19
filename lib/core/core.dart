@@ -7,6 +7,8 @@ export 'utils/extensions.dart';
 export 'constants/constants.dart';
 export 'constants/config.dart';
 export 'models/r_response.dart';
+export 'models/user.dart';
+export 'models/user.dart';
 export 'service/http/http_service.dart';
 export 'service/http/dio_service.dart';
 export 'service/local_storage/local_storage.dart';
