@@ -8,10 +8,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<User> login(
       {required String username, required String password}) async {
-    var user = User();
+    late User user;
     try {
       final response = await auth.login(username: username, password: password);
-      user = response.result?.data;
+      user = User.fromMap(response.result?.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;
     }
