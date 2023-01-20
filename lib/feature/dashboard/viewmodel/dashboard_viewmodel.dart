@@ -15,21 +15,25 @@ class DashboardViewmodel extends ChangeNotifier {
   ErrorModel get error => _errorModel;
 
   Future<void> getBusinesses() async {
-    if (_businesses.isEmpty) {
-      _loading = true;
-      notifyListeners();
-    }
+    // if (_businesses.isEmpty) {
+    //   _loading = true;
+    //   notifyListeners();
+    // }
+    _loading = true;
     _errorModel.clear();
     notifyListeners();
     try {
       _businesses = await _productRepo.getProductAll();
+      _loading = false;
       notifyListeners();
     } on NetworkException catch (e) {
       _errorModel.description = e.value;
+      _loading = false;
       notifyListeners();
       logger.e(e.value);
     } catch (e) {
       _errorModel.description = 'Somthing went wrong';
+      _loading = false;
       notifyListeners();
       logger.e(e);
     }

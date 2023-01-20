@@ -13,7 +13,7 @@ class FakeAuth implements AuthApi {
         requestOptions: RequestOptions(path: ''),
         data: User(
           id: 1,
-          username: 'Tobi',
+          username: username,
           email: 'obitouchiha@mail.com',
           firstname: 'Obito',
           lastname: 'Uchiha',

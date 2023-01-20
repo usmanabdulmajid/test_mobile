@@ -71,7 +71,7 @@ class ProductRepositoryImpl implements ProductRepository {
     late List<Product> products;
     try {
       final response = await _product.getAllProduct();
-      final list = response.result?.data as List;
+      final list = response.result?.data['products'] as List;
       products = list.map((each) => Product.fromMap(each)).toList();
     } catch (e) {
       rethrow;

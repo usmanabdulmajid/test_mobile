@@ -1,9 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:test_mobile/core/core.dart';
-import 'package:test_mobile/feature/dashboard/view/widgets/dashboard_tile.dart';
+import 'dart:convert';
 
-class DashboardScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:test_mobile/core/core.dart';
+import 'package:test_mobile/feature/business/viewmodel/business_viewmodel.dart';
+import 'package:test_mobile/feature/dashboard/view/widgets/dashboard_tile.dart';
+import 'package:test_mobile/feature/dashboard/viewmodel/dashboard_viewmodel.dart';
+
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<DashboardViewmodel>().getBusinesses();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,198 +92,242 @@ class DashboardScreen extends StatelessWidget {
       backgroundColor: AppColor.alabaster,
       body: ScrollConfiguration(
         behavior: const ScrollBehavior(),
-        child: ListView(
-          padding: const EdgeInsets.symmetric(
-              horizontal: kspace, vertical: kmediumSpace),
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text('DASHBOARD'),
-                    YMargin(kspace),
-                    Text(
-                      'Overview',
-                      style: TextStyle(
-                        color: AppColor.mineShaft,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(AppColor.matisse),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(AppColor.white),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: ksmallSpace),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.add),
-                        Text('Business Place'),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const YMargin(kLargeSpace),
-            //revenue card
-            Container(
-              width: size.width,
-              padding: const EdgeInsets.only(
-                  right: kspace,
-                  left: kspace,
-                  top: kspace,
-                  bottom: kLargeSpace),
-              decoration: BoxDecoration(
-                color: AppColor.catskillWhite,
-                borderRadius: BorderRadius.circular(kTinyBorderRadius),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await context.read<DashboardViewmodel>().getBusinesses();
+          },
+          child: ListView(
+            padding: const EdgeInsets.symmetric(
+                horizontal: kspace, vertical: kmediumSpace),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Revenue',
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text('DASHBOARD'),
+                      YMargin(kspace),
+                      Text(
+                        'Overview',
                         style: TextStyle(
-                          fontSize: 16,
+                          color: AppColor.mineShaft,
+                          fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          color: AppColor.matisse,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppColor.curiousBlue),
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(AppColor.white),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: ksmallSpace),
-                          child: Row(
-                            children: const [
-                              Text('Today'),
-                              Icon(Icons.keyboard_arrow_down_outlined),
-                            ],
-                          ),
                         ),
                       ),
                     ],
                   ),
-                  const YMargin(kLargeSpace),
-                  RichText(
-                    text: TextSpan(
-                      text: 4500880.currency,
-                      style: const TextStyle(
-                        color: AppColor.eden,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      children: const [
-                        TextSpan(
-                          text: '.00',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
+                  TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(AppColor.matisse),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(AppColor.white),
                     ),
-                  ),
-                  const YMargin(kspace),
-                  const Text(
-                    'REVENUE COLLECTED',
-                    style: TextStyle(
-                      color: AppColor.mineShaft,
-                      fontSize: 15,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: ksmallSpace),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.add),
+                          Text('Business Place'),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            const YMargin(kspace),
-            SizedBox(
-              height: 125,
-              child: ScrollConfiguration(
-                behavior: const ScrollBehavior(),
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+              const YMargin(kLargeSpace),
+              //revenue card
+              Container(
+                width: size.width,
+                padding: const EdgeInsets.only(
+                    right: kspace,
+                    left: kspace,
+                    top: kspace,
+                    bottom: kLargeSpace),
+                decoration: BoxDecoration(
+                  color: AppColor.catskillWhite,
+                  borderRadius: BorderRadius.circular(kTinyBorderRadius),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DashboardTile(
-                      count: 1,
-                      label: 'Applications',
-                      color: Colors.red,
-                      icon: const Icon(Icons.notes, color: Colors.red),
-                      onpressed: () {},
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Revenue',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.matisse,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                AppColor.curiousBlue),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                AppColor.white),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: ksmallSpace),
+                            child: Row(
+                              children: const [
+                                Text('Today'),
+                                Icon(Icons.keyboard_arrow_down_outlined),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    DashboardTile(
-                      count: 67000,
-                      label: 'My Businesses',
-                      color: AppColor.dairyCream,
-                      icon: const Icon(Icons.business_center_outlined,
-                          color: AppColor.goBen),
-                      onpressed: () {},
+                    const YMargin(kLargeSpace),
+                    RichText(
+                      text: TextSpan(
+                        text: 4500880.currency,
+                        style: const TextStyle(
+                          color: AppColor.eden,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        children: const [
+                          TextSpan(
+                            text: '.00',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
-                    DashboardTile(
-                      count: 12,
-                      label: 'Sub-Agents',
-                      color: AppColor.goblin,
-                      icon: const Icon(Icons.people_outline,
-                          color: AppColor.goblin),
-                      onpressed: () {},
+                    const YMargin(kspace),
+                    const Text(
+                      'REVENUE COLLECTED',
+                      style: TextStyle(
+                        color: AppColor.mineShaft,
+                        fontSize: 15,
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            const YMargin(kspace),
-            const Text(
-              'My Businesses',
-              style: TextStyle(
-                color: AppColor.mineShaft,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const YMargin(ksmallSpace),
-            Container(
-              width: size.width,
-              padding: const EdgeInsets.all(kspace),
-              decoration: const BoxDecoration(
-                color: AppColor.catskillWhite,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(kTinyBorderRadius),
-                  topRight: Radius.circular(kTinyBorderRadius),
+              const YMargin(kspace),
+              SizedBox(
+                height: 125,
+                child: ScrollConfiguration(
+                  behavior: const ScrollBehavior(),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      DashboardTile(
+                        count: 1,
+                        label: 'Applications',
+                        color: Colors.red,
+                        icon: const Icon(Icons.notes, color: Colors.red),
+                        onpressed: () {},
+                      ),
+                      DashboardTile(
+                        count: 67000,
+                        label: 'My Businesses',
+                        color: AppColor.dairyCream,
+                        icon: const Icon(Icons.business_center_outlined,
+                            color: AppColor.goBen),
+                        onpressed: () {},
+                      ),
+                      DashboardTile(
+                        count: 12,
+                        label: 'Sub-Agents',
+                        color: AppColor.goblin,
+                        icon: const Icon(Icons.people_outline,
+                            color: AppColor.goblin),
+                        onpressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              child: const Text(
-                'Name',
+              const YMargin(kspace),
+              const Text(
+                'My Businesses',
                 style: TextStyle(
-                  color: AppColor.stormGrey,
+                  color: AppColor.mineShaft,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-            ),
-            Column(
-              children: List.generate(
-                  4,
-                  (index) => ProductTile(
-                        name: index.toString(),
-                        hideDivider: index == 4 - 1,
-                      )).toList(),
-            ),
-            const YMargin(kmediumSpace),
-          ],
+              const YMargin(ksmallSpace),
+              Container(
+                width: size.width,
+                padding: const EdgeInsets.all(kspace),
+                decoration: const BoxDecoration(
+                  color: AppColor.catskillWhite,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(kTinyBorderRadius),
+                    topRight: Radius.circular(kTinyBorderRadius),
+                  ),
+                ),
+                child: const Text(
+                  'Name',
+                  style: TextStyle(
+                    color: AppColor.stormGrey,
+                  ),
+                ),
+              ),
+              Consumer<DashboardViewmodel>(
+                builder: (context, model, child) {
+                  if (model.loading) {
+                    return Column(
+                      children: const [
+                        YMargin(kspace),
+                        Text('Loading....'),
+                      ],
+                    );
+                  }
+                  if (!model.loading && model.error.description.isNotEmpty) {
+                    Alert.show(context, description: model.error.description);
+                    return Column(
+                      children: [
+                        const YMargin(kspace),
+                        IconButton(
+                          onPressed: () async {
+                            await context
+                                .read<DashboardViewmodel>()
+                                .getBusinesses();
+                          },
+                          icon: const Icon(Icons.refresh),
+                        ),
+                        const Text('Retry'),
+                      ],
+                    );
+                  }
+                  if (!model.loading &&
+                      model.error.description.isEmpty &&
+                      model.businesses.isEmpty) {
+                    return Column(
+                      children: const [
+                        YMargin(kspace),
+                        Text('No business available'),
+                      ],
+                    );
+                  }
+                  return Column(
+                    children: List.generate(
+                        model.businesses.length,
+                        (index) => ProductTile(
+                              name: model.businesses[index].title ?? '',
+                              hideDivider: index == model.businesses.length - 1,
+                            )).toList(),
+                  );
+                },
+              ),
+              const YMargin(kmediumSpace),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: GestureDetector(
