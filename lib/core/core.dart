@@ -9,6 +9,7 @@ export 'constants/config.dart';
 export 'models/r_response.dart';
 export 'models/user.dart';
 export 'models/product.dart';
+export 'models/error_model.dart';
 export 'service/http/http_service.dart';
 export 'service/http/dio_service.dart';
 export 'service/local_storage/local_storage.dart';
