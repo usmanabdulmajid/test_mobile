@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_mobile/core/core.dart';
 import 'package:test_mobile/feature/auth/view/login_screen.dart';
 import 'package:test_mobile/feature/business/viewmodel/business_viewmodel.dart';
 import 'package:test_mobile/feature/dashboard/viewmodel/dashboard_viewmodel.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Test Mobile',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: AppColor.matisse,
         ),
         home: LoginScreen(),
       ),
