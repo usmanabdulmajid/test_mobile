@@ -1,6 +1,6 @@
 import 'package:test_mobile/core/models/user.dart';
 import 'package:test_mobile/data/data.dart';
-import 'package:test_mobile/domain/auth_repository.dart';
+import 'package:test_mobile/domain/auth/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.auth);
