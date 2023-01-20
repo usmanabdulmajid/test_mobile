@@ -13,6 +13,17 @@ This project's architecture consists of three(3) basic layers:
 ## Challenges encountered
 - The auth/login endpoint for the Dummy API fails to validate any of the predefined [users](https://dummyjson.com/users). As a result of this, a FakeAuth api class was created to simulate the login endpoint and create a user object
 
+## Screenshots
+
+![Screenshot_20230120-071405](https://user-images.githubusercontent.com/63570223/213631358-84e1c31f-40f5-4ff8-a249-ed9bb83154da.png)
+
+![Screenshot_20230120-071411](https://user-images.githubusercontent.com/63570223/213631384-e9a1a417-23c8-4072-8546-d1cf12cb725c.png)
+![Screenshot_20230120-071419](https://user-images.githubusercontent.com/63570223/213631441-707396dc-7b41-47eb-9648-c4c57917c4f7.png)
+![Screenshot_20230120-071430](https://user-images.githubusercontent.com/63570223/213631572-60a75a40-74e8-4575-bad0-fc18bb2e3753.png)
+![Screenshot_20230120-071443](https://user-images.githubusercontent.com/63570223/213631608-5a1a28a4-7227-4785-a967-39399bd8a2dc.png)
+![Screenshot_20230120-071457](https://user-images.githubusercontent.com/63570223/213631633-bfac8ba1-2c95-4823-971f-b55ef45592da.png)
+
+
 ## Folder Structure
 ```
 lib/
