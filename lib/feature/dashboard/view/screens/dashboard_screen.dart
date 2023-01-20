@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_mobile/core/core.dart';
+import 'package:test_mobile/feature/business/view/screens/business_screen.dart';
 import 'package:test_mobile/feature/business/viewmodel/business_viewmodel.dart';
 import 'package:test_mobile/feature/dashboard/view/widgets/dashboard_tile.dart';
 import 'package:test_mobile/feature/dashboard/viewmodel/dashboard_viewmodel.dart';
@@ -120,7 +121,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ],
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BusinessScreen(),
+                        ),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(AppColor.matisse),
@@ -240,7 +248,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         color: AppColor.dairyCream,
                         icon: const Icon(Icons.business_center_outlined,
                             color: AppColor.goBen),
-                        onpressed: () {},
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const BusinessScreen(),
+                            ),
+                          );
+                        },
                       ),
                       DashboardTile(
                         count: 12,

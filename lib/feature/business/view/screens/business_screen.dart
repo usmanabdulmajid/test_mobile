@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:test_mobile/core/core.dart';
+import 'package:test_mobile/feature/business/view/screens/business_detail_screen.dart';
+import 'package:test_mobile/feature/business/viewmodel/business_viewmodel.dart';
 
-class BusinessScreen extends StatelessWidget {
+class BusinessScreen extends StatefulWidget {
   const BusinessScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BusinessScreen> createState() => _BusinessScreenState();
+}
+
+class _BusinessScreenState extends State<BusinessScreen> {
+  final searchController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<BusinessViewmodel>().getBusinesses();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +135,10 @@ class BusinessScreen extends StatelessWidget {
             ),
             const YMargin(kspace),
             TextFormField(
+              controller: searchController,
+              onChanged: (value) {
+                context.read<BusinessViewmodel>().searchBusiness(value);
+              },
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: kspace),
                 hintText: 'Search business places',
@@ -149,36 +170,95 @@ class BusinessScreen extends StatelessWidget {
             Expanded(
               child: ScrollConfiguration(
                 behavior: const ScrollBehavior(),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Container(
-                      width: size.width,
-                      padding: const EdgeInsets.all(kspace),
-                      decoration: const BoxDecoration(
-                        color: AppColor.catskillWhite,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(kTinyBorderRadius),
-                          topRight: Radius.circular(kTinyBorderRadius),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    searchController.clear();
+                    await context.read<BusinessViewmodel>().getBusinesses();
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        width: size.width,
+                        padding: const EdgeInsets.all(kspace),
+                        decoration: const BoxDecoration(
+                          color: AppColor.catskillWhite,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(kTinyBorderRadius),
+                            topRight: Radius.circular(kTinyBorderRadius),
+                          ),
+                        ),
+                        child: const Text(
+                          'Name',
+                          style: TextStyle(
+                            color: AppColor.stormGrey,
+                          ),
                         ),
                       ),
-                      child: const Text(
-                        'Name',
-                        style: TextStyle(
-                          color: AppColor.stormGrey,
-                        ),
+                      Consumer<BusinessViewmodel>(
+                        builder: (context, model, child) {
+                          if (model.loading) {
+                            return Column(
+                              children: const [
+                                YMargin(kLargestSpace),
+                                Text('Loading....'),
+                              ],
+                            );
+                          }
+                          if (!model.loading &&
+                              model.error.description.isNotEmpty) {
+                            Alert.show(context,
+                                description: model.error.description);
+                            return Column(
+                              children: [
+                                const YMargin(kspace),
+                                IconButton(
+                                  onPressed: () async {
+                                    searchController.clear();
+                                    await context
+                                        .read<BusinessViewmodel>()
+                                        .getBusinesses();
+                                  },
+                                  icon: const Icon(Icons.refresh),
+                                ),
+                                const Text('Retry'),
+                              ],
+                            );
+                          }
+                          if (!model.loading &&
+                              model.error.description.isEmpty &&
+                              model.businesses.isEmpty &&
+                              searchController.text.isEmpty) {
+                            return Column(
+                              children: const [
+                                YMargin(kspace),
+                                Text('No business available'),
+                              ],
+                            );
+                          }
+                          if (searchController.text.isNotEmpty &&
+                              model.businesses.isEmpty) {
+                            return Column(
+                              children: const [
+                                YMargin(kspace),
+                                Text('No result found'),
+                              ],
+                            );
+                          }
+                          return Column(
+                            children: List.generate(
+                                model.businesses.length,
+                                (index) => ProductTile(
+                                      name: model.businesses[index].title ?? '',
+                                      hideDivider:
+                                          index == model.businesses.length - 1,
+                                    )).toList(),
+                          );
+                        },
                       ),
-                    ),
-                    Column(
-                      children: List.generate(
-                          25,
-                          (index) => ProductTile(
-                                name: index.toString(),
-                                hideDivider: index == 25 - 1,
-                              )).toList(),
-                    ),
-                    const YMargin(kmediumSpace),
-                  ],
+                      const YMargin(kmediumSpace),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -186,7 +266,14 @@ class BusinessScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BusinessDetailScreen(),
+            ),
+          );
+        },
         child: Container(
           height: 60,
           width: size.width,

@@ -18,14 +18,16 @@ class BusinessViewmodel extends ChangeNotifier {
   ErrorModel get error => _errorModel;
 
   Future<void> getBusinesses() async {
-    if (_businesses.isEmpty) {
-      _loading = true;
-      notifyListeners();
-    }
+    // if (_businesses.isEmpty) {
+    //   _loading = true;
+    //   notifyListeners();
+    // }
+    _loading = true;
     _errorModel.clear();
     notifyListeners();
     try {
       _businesses = await _productRepo.getProductAll();
+      _utilityBusinessList = _businesses;
       notifyListeners();
     } on NetworkException catch (e) {
       _errorModel.description = e.value;
@@ -40,7 +42,7 @@ class BusinessViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void searchProduct(String keyword) {
+  void searchBusiness(String keyword) {
     if (keyword.isEmpty) {
       _businesses = _utilityBusinessList;
       _businesses.sort((a, b) => a.title!.compareTo(b.title!));
@@ -51,6 +53,7 @@ class BusinessViewmodel extends ChangeNotifier {
         .where((category) => category.title!.toLowerCase().contains(keyword))
         .toList();
     _businesses.sort((a, b) => a.title!.compareTo(b.title!));
+    logger.i(_businesses);
     notifyListeners();
   }
 }
