@@ -109,6 +109,9 @@ class LoginScreen extends StatelessWidget {
                         if (value == null || value.isEmpty) {
                           return 'Please enter password';
                         }
+                        if (value.length < 5) {
+                          return 'Paswword is weak';
+                        }
                         return null;
                       },
                     ),
