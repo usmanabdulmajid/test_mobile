@@ -38,7 +38,7 @@ class DummyProduct implements ProductApi {
   }
 
   @override
-  Future<RResponse> getLimitProduct(int limit) async {
+  Future<RResponse> getLimitProducts(int limit) async {
     return await http.request(
       url: '/products?limit=$limit',
       methodrequest: RequestMethod.get,
@@ -62,7 +62,7 @@ class DummyProduct implements ProductApi {
   }
 
   @override
-  Future<RResponse> getSkippedProduct(int skip) async {
+  Future<RResponse> getSkippedProducts(int skip) async {
     return await http.request(
       url: '/products?skip=$skip',
       methodrequest: RequestMethod.get,
