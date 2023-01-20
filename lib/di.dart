@@ -32,7 +32,8 @@ Future<void> setup() async {
       () => DummyProduct(locator()),
     )
     ..registerLazySingleton<AuthApi>(
-      () => DummyAuth(locator()),
+      //This is a class to simulate user login as a result of dummy api's login endpoint not responsing properly
+      () => FakeAuth(),
     )
     //services
     ..registerLazySingleton<HttpService>(
