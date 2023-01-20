@@ -1,12 +1,14 @@
-///This is a respose object returned from http requests
+import 'package:dio/dio.dart';
+
+///This is a response object returned from http requests
 class RResponse<T> {
-  T? result;
+  Response? result;
   RResponse({
     this.result,
   });
 
   RResponse<T> copyWith({
-    T? result,
+    Response? result,
   }) {
     return RResponse<T>(
       result: result ?? this.result,
