@@ -232,7 +232,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         onpressed: () {},
                       ),
                       DashboardTile(
-                        count: 67000,
+                        count: context
+                            .watch<DashboardViewmodel>()
+                            .businesses
+                            .length,
                         label: 'My Businesses',
                         color: AppColor.dairyCream,
                         icon: const Icon(Icons.business_center_outlined,
