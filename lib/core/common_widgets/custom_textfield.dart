@@ -5,12 +5,14 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final String? hintText;
   final TextInputType? keyboardType;
+  final FormFieldValidator<String>? validator;
   final TextEditingController? controller;
   const CustomTextField({
     Key? key,
     required this.label,
     this.hintText,
     this.keyboardType,
+    this.validator,
     this.controller,
   }) : super(key: key);
 
@@ -30,6 +32,7 @@ class CustomTextField extends StatelessWidget {
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
+          validator: validator,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: kspace),
             hintText: hintText,
