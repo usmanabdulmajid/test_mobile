@@ -104,6 +104,7 @@ class LoginScreen extends StatelessWidget {
                       label: 'Password',
                       hintText: 'Enter your password',
                       controller: passwordController,
+                      obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

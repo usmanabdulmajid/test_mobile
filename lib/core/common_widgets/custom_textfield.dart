@@ -4,6 +4,7 @@ import 'package:test_mobile/core/core.dart';
 class CustomTextField extends StatelessWidget {
   final String label;
   final String? hintText;
+  final bool obscureText;
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
   final TextEditingController? controller;
@@ -11,6 +12,7 @@ class CustomTextField extends StatelessWidget {
     Key? key,
     required this.label,
     this.hintText,
+    this.obscureText = false,
     this.keyboardType,
     this.validator,
     this.controller,
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           validator: validator,
+          obscureText: obscureText,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: kspace),
             hintText: hintText,
