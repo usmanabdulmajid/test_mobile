@@ -37,7 +37,7 @@ NetworkException parseNetworkException(DioError e) {
         case 403:
           networkException = NetworkException(
             NetworkExceptionType.unauthorizedRequest,
-            message: e.response!.data['errorMessage'],
+            message: e.response!.data['message'],
           );
           break;
         case 404:

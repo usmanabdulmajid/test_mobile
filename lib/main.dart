@@ -8,7 +8,9 @@ import 'package:test_mobile/feature/dashboard/viewmodel/dashboard_viewmodel.dart
 import 'di.dart';
 import 'feature/auth/viewmodel/auth_viewmodel.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setup();
   runApp(const MyApp());
 }
 

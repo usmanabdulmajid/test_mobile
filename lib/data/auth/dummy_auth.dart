@@ -7,6 +7,9 @@ class DummyAuth implements AuthApi {
   @override
   Future<RResponse> login(
       {required String username, required String password}) async {
-    return await http.request(url: '/login', methodrequest: RequestMethod.post);
+    return await http.request(
+      url: '/auth/login',
+      methodrequest: RequestMethod.post,
+    );
   }
 }

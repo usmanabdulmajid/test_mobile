@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_mobile/core/common_widgets/custom_textfield.dart';
 import 'package:test_mobile/core/core.dart';
+import 'package:test_mobile/di.dart';
+import 'package:test_mobile/feature/auth/viewmodel/auth_viewmodel.dart';
+import 'package:test_mobile/feature/dashboard/view/screens/dashboard_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -123,8 +127,11 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const YMargin(kLargeSpace + kspace),
                     TextButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {}
+                      onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          await login(context);
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -151,5 +158,23 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> login(BuildContext context) async {
+    final loader = Loader(context);
+    final model = locator<AuthViewmodel>();
+    loader.show();
+    await model.login(
+        username: nameController.text.trim(),
+        password: passwordController.text.trim());
+    loader.close();
+    if (model.success) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      );
+    } else {
+      Alert.show(context, description: model.error.description);
+    }
   }
 }

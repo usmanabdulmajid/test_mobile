@@ -9,8 +9,10 @@ class AuthViewmodel extends ChangeNotifier {
   final AuthRepository _auth;
 
   bool _loading = false;
+  bool _success = false;
   final _errorModel = ErrorModel();
   bool get loading => _loading;
+  bool get success => _success;
   ErrorModel get error => _errorModel;
 
   void setloading(bool val) {
@@ -24,13 +26,19 @@ class AuthViewmodel extends ChangeNotifier {
     required String password,
   }) async {
     setloading(true);
+    _success = false;
+    notifyListeners();
     try {
       await _auth.login(username: username, password: password);
+      _success = true;
+      notifyListeners();
     } on NetworkException catch (e) {
+      _success = false;
       _errorModel.description = e.value;
       notifyListeners();
       logger.e(e.value);
     } catch (e) {
+      _success = false;
       _errorModel.description = 'Somthing went wrong';
       notifyListeners();
       logger.e(e);
